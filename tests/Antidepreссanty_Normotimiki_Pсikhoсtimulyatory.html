@@ -1,0 +1,1244 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Антидепрессанты. Нормотимики. Психостимуляторы</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        .options-list li {
+            margin-bottom: 8px;
+        }
+        .options-list label {
+            display: block;
+            padding: 8px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .options-list label:hover {
+            background-color: #e9e9e9;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        label.correct-answer { /* Corrected selector */
+            background-color: #e6ffe6;
+            border-color: #a3e6a3;
+        }
+        label.incorrect-answer { /* Corrected selector */
+            background-color: #ffe6e6;
+            border-color: #e6a3a3;
+        }
+        .explanation-block {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #eaf2f8;
+            border: 1px solid #cce7ff;
+            border-radius: 5px;
+            display: none; /* Hidden by default */
+        }
+        .explanation-toggle {
+            cursor: pointer;
+            color: #0056b3;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: block;
+        }
+        .results-block {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: none;
+        }
+        .buttons-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .buttons-container button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .buttons-container button.check-button {
+            background-color: #28a745;
+            color: white;
+        }
+        .buttons-container button.check-button:hover {
+            background-color: #218838;
+        }
+        .buttons-container button.reset-button {
+            background-color: #dc3545;
+            color: white;
+        }
+        .buttons-container button.reset-button:hover {
+            background-color: #c82333;
+        }
+        .fill-in-blank-input {
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 3px;
+            width: 150px; /* Adjust as needed */
+        }
+        .fill-in-blank-input.correct {
+            background-color: #e6ffe6;
+            border-color: #a3e6a3;
+        }
+        .fill-in-blank-input.incorrect {
+            background-color: #ffe6e6;
+            border-color: #e6a3a3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Антидепрессанты. Нормотимики. Психостимуляторы</h1>
+        <form id="quizForm">
+            <!-- Questions will be rendered here by JavaScript -->
+        </form>
+        <div class="buttons-container">
+            <button type="button" class="check-button" onclick="checkAnswers()">Проверить</button>
+            <button type="button" class="reset-button" onclick="resetQuiz()">Сбросить</button>
+        </div>
+        <div id="results" class="results-block">
+            Ваш результат: <span id="score">0</span> из <span id="totalQuestions">0</span> (<span id="percentage">0</span>%)
+        </div>
+    </div>
+
+    <script>
+        const quizData = {
+  "title": "Антидепрессанты. Нормотимики. Психостимуляторы",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Отметьте препараты, избирательно блокирующие обратный нейрональный захват серотонина:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "флуоксетин",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "карбамазепин",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "пирлиндол",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "амитриптилин",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "сертралин",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 2,
+      "question": "Препараты, эффективные как для профилактики депрессивной симптоматики, так и для лечения маний:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "карбамазепин",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "амитриптилин",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "лития карбонат",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "флуоксетин",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "вальпроат натрия",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 3,
+      "question": "Механизмы тимоаналептического эффекта антидепрессантов:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "аллостерическая активация ГАМК-рецептора",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "блокада МАО в синапсах ЦНС",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "блокада обратного нейронального захвата норадреналина и серотонина",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "уменьшение синтеза моноаминов в нервных окончаниях",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "блокада Д2-дофаминорецепторов лимбической области",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 4,
+      "question": "Карбамазепин применяется при лечении:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "депрессии",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "тревожных расстройств",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "большого биполярного расстройства",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "шизофрении",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "эпилепсии",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 5,
+      "question": "Антидепрессант, неселективно блокирующий обратный захват моноаминов:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "флуоксетин",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "амитриптилин",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "хлорпромазин",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "пирлиндол",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "миртазапин",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 6,
+      "question": "Антидепрессант, блокирующий моноаминоксидазу (МАО):",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "флуоксетин",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "амитриптилин",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "хлорпромазин",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "пирлиндол",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "миансерин",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 7,
+      "question": "Нормотимики применяются при лечении:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "большого биполярного расстройства",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "тревожных расстройств",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "шизофрении",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "эпилепсии",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "депрессии",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 8,
+      "question": "Механизм действия пирлиндола:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что данные варианты описывают ключевые биохимические или физиологические процессы, лежащие в основе эффектов препарата. Понимание этих механизмов критически важно для предсказания фармакологических эффектов и побочных реакций препарата.",
+      "options": [
+        {
+          "id": 1,
+          "text": "блокада Д2-дофаминовых рецепторов",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "блокада альфа-2 пресинаптических и 5-НТ2 рецепторов",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "селективное ингибирование обратного захвата серотонина",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "неселективное ингибирование обратного захвата моноаминов",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "блокада МАО",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 9,
+      "question": "После приема амитриптилина тимолептический эффект развивается:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "через 3 часа",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "через сутки",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "через неделю",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "через 2 недели",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "не ранее, чем через месяц",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 10,
+      "question": "При биполярном расстройстве могут быть назначены все перечисленные препараты, КРОМЕ:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "карбамазепин",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "натрия вальпроат",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "лития карбонат",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "магния сульфат",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 11,
+      "question": "Эффекты Амитриптилина:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "анксиолитический",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "седативный",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "психостимулирующий",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "тимолептический",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "холинолитический",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 12,
+      "question": "Эффекты Флуоксетина:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "анксиолитический",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "седативный",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "психостимулирующий",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "тимолептический",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "холинолитический",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 13,
+      "question": "Эффекты Миртазапина:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "анксиолитический",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "седативный",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "психостимулирующий",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "тимолептический",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "холинолитический",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 14,
+      "question": "Показания к применению Карбоната лития:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "депрессивные состояния с явлениями возбуждения",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "депрессивные состояния с вялостью и заторможенностью",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "маниакальное состояние",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 15,
+      "question": "Показания к применению Амитриптилина:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "депрессивные состояния с явлениями возбуждения",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "депрессивные состояния с вялостью и заторможенностью",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "маниакальное состояние",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 16,
+      "question": "Показания к применению Флуоксетина:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "депрессивные состояния с явлениями возбуждения",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "депрессивные состояния с вялостью и заторможенностью",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "маниакальное состояние",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 17,
+      "question": "Побочные эффекты Карбоната лития:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "сухость во рту, запоры, тахикардия",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "тремор, мышечная слабость",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "нарушения щитовидной железы",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "сонливость, заторможенность",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 18,
+      "question": "Побочные эффекты Амитриптилина:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "сухость во рту, запоры, тахикардия",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "тремор, мышечная слабость",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "нарушения щитовидной железы",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "сонливость, заторможенность",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 19,
+      "question": "Лекарственные средства, способные уменьшать циркулярные колебания настроения, а при профилактическом применении предотвращать развитие депрессивной и маниакальной симптоматики, называются {нормотимики|Нормотимики}",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант для заполнения пропуска соответствует 'нормотимики, Нормотимики'. Эти термины точно описывают процессы или вещества, необходимые для заполнения пропусков.",
+      "options": [],
+      "fill_in_blanks": [
+        [
+          "нормотимики",
+          "Нормотимики"
+        ]
+      ]
+    },
+    {
+      "id": 20,
+      "question": "Механизм действия фенилалкиламинов:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что данные варианты описывают ключевые биохимические или физиологические процессы, лежащие в основе эффектов препарата. Понимание этих механизмов критически важно для предсказания фармакологических эффектов и побочных реакций препарата.",
+      "options": [
+        {
+          "id": 1,
+          "text": "блокада ГАМК-рецепторов",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "конкурентный антагонизм с аденозином в ЦНС",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "усиление выброса норадреналина (НА) и дофамина (ДА) в синаптическую щель",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "блокада фосфодиэстеразы (ФДЭ) и накопление ЦАМФ",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 21,
+      "question": "Все положения, касающиеся эффектов ноотропов верны, за исключением:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "улучшение утилизации глюкозы и образования макроэргических соединений",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "усиление выброса катехоламинов в синаптическую щель",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "усиление синтеза РНК и ДНК",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "повышение устойчивости головного мозга к гипоксии",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "улучшение кровообращения в головном мозге",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 22,
+      "question": "Психостимулятор растительного происхождения, близкий к метаболитам организма, обладающий центральным и периферическим влиянием на сердечно-сосудистую систему:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "мезокарб",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "кодеин",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "эфедрин",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "кофеин",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "никетамид",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 23,
+      "question": "К побочным эффектам кофеина НЕ относится:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "диуретический эффект",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "тахикардия",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "угнетение дыхания",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "тревожность",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 24,
+      "question": "Повышение умственной и физической работоспособности вызывают и являются допингами:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "ноотропы",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "психостимуляторы",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "нормотимики",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "анксиолититики",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "аналептики",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 25,
+      "question": "Механизмы центральных и периферических эффектов кофеина:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "блокада ФДЭ и накопление ЦАМФ",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "усиление выброса катехоламинов в синаптическую щель",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "конкурентная блокада аденозиновых рецепторов",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "блокада серотониновых рецепторов в ЦНС",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "активация аденилатциклазы (АДЦ) и накопление ЦАМФ",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 26,
+      "question": "Эффекты, характерные для психостимуляторов:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "аналептический",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "усиление физической работоспособности",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "тимолептический",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "анксиолитический",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "антигипоксический",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 27,
+      "question": "Побочные эффекты, типичные для амфетамина:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "повышение аппетита",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "лекарственная зависимость",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "ухудшение настроения",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "повышение артериального давления",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "тахикардия",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 28,
+      "question": "Эффекты Пирацетама:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "антигипоксический",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "стимуляция умственной деятельности",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "стимуляция физической активности",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "активация сосудодвигательного и дыхательного центров",
+          "correct": false
+        },
+        {
+          "id": 5,
+          "text": "тимолептическое действие",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 29,
+      "question": "Эффекты Кофеина:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "антигипоксический",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "стимуляция умственной деятельности",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "стимуляция физической активности",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "активация сосудодвигательного и дыхательного центров",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "тимолептическое действие",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    }
+  ]
+};
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuiz();
+        });
+
+        function renderQuiz() {
+            const quizForm = document.getElementById('quizForm');
+            quizForm.innerHTML = ''; // Clear previous questions
+            quizData.questions.forEach(q => {
+                const questionBlock = document.createElement('div');
+                questionBlock.classList.add('question-block');
+                questionBlock.setAttribute('data-question-id', q.id);
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('question-text');
+                
+                let qTextHtml = q.question;
+                if (q.fill_in_blanks && q.fill_in_blanks.length > 0) {
+                    let blankIndex = 0;
+                    qTextHtml = q.question.replace(/{.*?}/g, () => {
+                        return `<input type="text" class="fill-in-blank-input" data-blank-index="${blankIndex++}" />`;
+                    });
+                }
+                questionText.innerHTML = `<span>${q.id}. ${qTextHtml}</span> <br> <small>(${q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'})</small>`;
+                questionBlock.appendChild(questionText);
+
+                if (q.options && q.options.length > 0) {
+                    const optionsList = document.createElement('ul');
+                    optionsList.classList.add('options-list');
+                    q.options.forEach(opt => {
+                        const listItem = document.createElement('li');
+                        const inputType = q.multi ? 'checkbox' : 'radio';
+                        const inputName = `question-${q.id}`;
+                        
+                        listItem.innerHTML = `
+                            <label>
+                                <input type="${inputType}" name="${inputName}" value="${opt.id}">
+                                ${opt.text}
+                            </label>
+                        `;
+                        optionsList.appendChild(listItem);
+                    });
+                questionBlock.appendChild(optionsList);
+                }
+
+                const explanationToggle = document.createElement('span');
+                explanationToggle.classList.add('explanation-toggle');
+                explanationToggle.textContent = 'Показать пояснение';
+                explanationToggle.style.display = 'none'; // Initially hidden
+                explanationToggle.onclick = () => {
+                    const explanationBlock = questionBlock.querySelector('.explanation-block');
+                    if (explanationBlock.style.display === 'none' || explanationBlock.style.display === '') {
+                        explanationBlock.style.display = 'block';
+                        explanationToggle.textContent = 'Скрыть пояснение';
+                    } else {
+                        explanationBlock.style.display = 'none';
+                        explanationToggle.textContent = 'Показать пояснение';
+                    }
+                };
+                questionBlock.appendChild(explanationToggle);
+
+                const explanationBlock = document.createElement('div');
+                explanationBlock.classList.add('explanation-block');
+                explanationBlock.style.display = 'none'; // Initially hidden
+                explanationBlock.innerHTML = q.explanation;
+                questionBlock.appendChild(explanationBlock);
+
+                quizForm.appendChild(questionBlock);
+            });
+            document.getElementById('totalQuestions').textContent = quizData.questions.length;
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            let totalQuestions = quizData.questions.length;
+
+            quizData.questions.forEach(q => {
+                const questionBlock = document.querySelector(`[data-question-id="${q.id}"]`);
+                // Clear all previous styling on labels and inputs
+                questionBlock.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('correct-answer', 'incorrect-answer');
+                });
+                questionBlock.querySelectorAll('.fill-in-blank-input').forEach(input => {
+                    input.classList.remove('correct', 'incorrect');
+                });
+
+                // Show explanation block and toggle after check
+                const explanationBlock = questionBlock.querySelector('.explanation-block');
+                const explanationToggle = questionBlock.querySelector('.explanation-toggle');
+                explanationBlock.style.display = 'block'; 
+                explanationToggle.style.display = 'block'; // Make toggle visible after check
+                explanationToggle.textContent = 'Скрыть пояснение';
+
+                let isQuestionCorrectOverall = true; // Tracks if the entire question is answered correctly
+
+                if (q.fill_in_blanks && q.fill_in_blanks.length > 0) {
+                    const inputs = questionBlock.querySelectorAll('.fill-in-blank-input');
+                    let allBlanksCorrect = true;
+                    inputs.forEach((input, index) => {
+                        const userAnswer = input.value.trim().toLowerCase();
+                        const correctAnswersForBlank = q.fill_in_blanks[index].map(ans => ans.toLowerCase());
+
+                        if (correctAnswersForBlank.includes(userAnswer)) {
+                            input.classList.add('correct');
+                        } else {
+                            input.classList.add('incorrect');
+                            allBlanksCorrect = false;
+                        }
+                    });
+                    if (allBlanksCorrect) {
+                        score++;
+                    }
+                } else if (q.options && q.options.length > 0) {
+                    const selectedInputs = Array.from(questionBlock.querySelectorAll(`input[name="question-${q.id}"]`));
+                    const correctOptionIds = q.options.filter(opt => opt.correct).map(opt => String(opt.id));
+                    
+                    let userCorrectSelections = 0;
+                    let userIncorrectSelections = 0;
+
+                    selectedInputs.forEach(input => {
+                        const optionId = String(input.value);
+                        const label = input.closest('label');
+
+                        if (input.checked) {
+                            if (correctOptionIds.includes(optionId)) {
+                                label.classList.add('correct-answer');
+                                userCorrectSelections++;
+                            } else {
+                                label.classList.add('incorrect-answer');
+                                userIncorrectSelections++;
+                            }
+                        } else { // If not selected
+                            if (correctOptionIds.includes(optionId)) {
+                                // This is a correct answer that the user missed
+                                label.classList.add('correct-answer'); // Highlight the missed correct answer
+                                isQuestionCorrectOverall = false;
+                            }
+                        }
+                    });
+
+                    // Check if all correct options were selected and no incorrect ones were selected
+                    if (userCorrectSelections === correctOptionIds.length && userIncorrectSelections === 0 && selectedInputs.filter(input => input.checked).length === correctOptionIds.length) {
+                        score++;
+                    }
+                }
+            });
+            document.getElementById('score').textContent = score;
+            const percentage = totalQuestions > 0 ? ((score / totalQuestions) * 100).toFixed(1) : 0;
+            document.getElementById('percentage').textContent = percentage;
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function resetQuiz() {
+            const quizForm = document.getElementById('quizForm');
+            quizForm.reset(); // Reset form inputs
+
+            quizData.questions.forEach(q => {
+                const questionBlock = document.querySelector(`[data-question-id="${q.id}"]`);
+                // Remove all result-related classes
+                questionBlock.querySelectorAll('.options-list label').forEach(label => {
+                    label.classList.remove('correct-answer', 'incorrect-answer');
+                });
+                questionBlock.querySelectorAll('.fill-in-blank-input').forEach(input => {
+                    input.classList.remove('correct', 'incorrect');
+                });
+                // Hide explanations
+                questionBlock.querySelector('.explanation-block').style.display = 'none';
+                questionBlock.querySelector('.explanation-toggle').textContent = 'Показать пояснение';
+            });
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('score').textContent = '0';
+        }
+    </script>
+</body>
+</html>

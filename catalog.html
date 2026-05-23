@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог тестов по фармакологии</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Каталог тестов по фармакологии</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Название темы</th>
+                    <th>Название файла</th>
+                    <th>Ссылка на тест</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const testMetadata = [
+  {
+    "title": "Адренолитики",
+    "filename": "Adrenolitiki.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Adrenolitiki.html"
+  },
+  {
+    "title": "Адреномиметики",
+    "filename": "Adrenomimetiki.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Adrenomimetiki.html"
+  },
+  {
+    "title": "Анальгетики. НПВС",
+    "filename": "Analgetiki_NPVS.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Analgetiki_NPVS.html"
+  },
+  {
+    "title": "Анестетики. Спирты",
+    "filename": "Aneсtetiki_Spirty.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Aneсtetiki_Spirty.html"
+  },
+  {
+    "title": "Анксиолитики. Снотворные. Противосудорожные",
+    "filename": "Ankсiolitiki_Snotvornye_Protivoсudorozhnye.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Ankсiolitiki_Snotvornye_Protivoсudorozhnye.html"
+  },
+  {
+    "title": "Антиангинальные",
+    "filename": "Antianginalnye.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Antianginalnye.html"
+  },
+  {
+    "title": "Антиаритмики",
+    "filename": "Antiaritmiki.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Antiaritmiki.html"
+  },
+  {
+    "title": "Антибиотики. Основные понятия. Бета-лактамы и макролиды",
+    "filename": "Antibiotiki_Oсnovnye_ponyatiya_Beta_laktamy_i_makrolidy.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Antibiotiki_Oсnovnye_ponyatiya_Beta_laktamy_i_makrolidy.html"
+  },
+  {
+    "title": "Антибиотики. Часть 2",
+    "filename": "Antibiotiki_Chaсt_2.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Antibiotiki_Chaсt_2.html"
+  },
+  {
+    "title": "Антигельминтные",
+    "filename": "Antigelmintnye.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Antigelmintnye.html"
+  },
+  {
+    "title": "Антигистаминные",
+    "filename": "Antigiсtaminnye.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Antigiсtaminnye.html"
+  },
+  {
+    "title": "Антидепрессанты. Нормотимики. Психостимуляторы",
+    "filename": "Antidepreссanty_Normotimiki_Pсikhoсtimulyatory.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Antidepreссanty_Normotimiki_Pсikhoсtimulyatory.html"
+  },
+  {
+    "title": "Гипотензивные",
+    "filename": "Gipotenzivnye.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Gipotenzivnye.html"
+  },
+  {
+    "title": "Гормоны",
+    "filename": "Gormony.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Gormony.html"
+  },
+  {
+    "title": "Кроветворение",
+    "filename": "Krovetvorenie.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Krovetvorenie.html"
+  },
+  {
+    "title": "Нейролептики и противопаркинсонические средства",
+    "filename": "Neyroleptiki_i_protivoparkinсonicheсkie_сredсtva.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Neyroleptiki_i_protivoparkinсonicheсkie_сredсtva.html"
+  },
+  {
+    "title": "Противовирусные",
+    "filename": "Protivoviruсnye.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Protivoviruсnye.html"
+  },
+  {
+    "title": "Противогрибковые",
+    "filename": "Protivogribkovye.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Protivogribkovye.html"
+  },
+  {
+    "title": "Противотуберкулёзные",
+    "filename": "Protivotuberkulyoznye.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Protivotuberkulyoznye.html"
+  },
+  {
+    "title": "Синтетические противомикробные средства",
+    "filename": "Sinteticheсkie_protivomikrobnye_сredсtva.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Sinteticheсkie_protivomikrobnye_сredсtva.html"
+  },
+  {
+    "title": "Фармакодинамика",
+    "filename": "Farmakodinamika.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Farmakodinamika.html"
+  },
+  {
+    "title": "Фармакокинетика",
+    "filename": "Farmakokinetika.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Farmakokinetika.html"
+  },
+  {
+    "title": "Холинергические средства",
+    "filename": "Kholinergicheсkie_сredсtva.html",
+    "github_pages_link": "https://nicotinko.github.io/FarmacologyTest/tests/Kholinergicheсkie_сredсtva.html"
+  }
+];
+        const tbody = document.querySelector('table tbody');
+
+        testMetadata.forEach(test => {
+            const row = tbody.insertRow();
+            row.insertCell().textContent = test.title;
+            row.insertCell().textContent = test.filename;
+            const linkCell = row.insertCell();
+            const link = document.createElement('a');
+            link.href = test.github_pages_link;
+            link.textContent = 'Перейти к тесту';
+            linkCell.appendChild(link);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,652 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фармакодинамика</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        .options-list li {
+            margin-bottom: 8px;
+        }
+        .options-list label {
+            display: block;
+            padding: 8px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .options-list label:hover {
+            background-color: #e9e9e9;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        label.correct-answer { /* Corrected selector */
+            background-color: #e6ffe6;
+            border-color: #a3e6a3;
+        }
+        label.incorrect-answer { /* Corrected selector */
+            background-color: #ffe6e6;
+            border-color: #e6a3a3;
+        }
+        .explanation-block {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #eaf2f8;
+            border: 1px solid #cce7ff;
+            border-radius: 5px;
+            display: none; /* Hidden by default */
+        }
+        .explanation-toggle {
+            cursor: pointer;
+            color: #0056b3;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: block;
+        }
+        .results-block {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: none;
+        }
+        .buttons-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .buttons-container button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .buttons-container button.check-button {
+            background-color: #28a745;
+            color: white;
+        }
+        .buttons-container button.check-button:hover {
+            background-color: #218838;
+        }
+        .buttons-container button.reset-button {
+            background-color: #dc3545;
+            color: white;
+        }
+        .buttons-container button.reset-button:hover {
+            background-color: #c82333;
+        }
+        .fill-in-blank-input {
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 3px;
+            width: 150px; /* Adjust as needed */
+        }
+        .fill-in-blank-input.correct {
+            background-color: #e6ffe6;
+            border-color: #a3e6a3;
+        }
+        .fill-in-blank-input.incorrect {
+            background-color: #ffe6e6;
+            border-color: #e6a3a3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Фармакодинамика</h1>
+        <form id="quizForm">
+            <!-- Questions will be rendered here by JavaScript -->
+        </form>
+        <div class="buttons-container">
+            <button type="button" class="check-button" onclick="checkAnswers()">Проверить</button>
+            <button type="button" class="reset-button" onclick="resetQuiz()">Сбросить</button>
+        </div>
+        <div id="results" class="results-block">
+            Ваш результат: <span id="score">0</span> из <span id="totalQuestions">0</span> (<span id="percentage">0</span>%)
+        </div>
+    </div>
+
+    <script>
+        const quizData = {
+  "title": "Фармакодинамика",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Виды первичной фармакологической реакции:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "химическое взаимодействие между лекарством и молекулами или ионами",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "конъюгация лекарства с глюкуроновой кислотой и другими эндогенными соединениями в печени",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "взаимодействие лекарства с рецепторами",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "адсорбция лекарством каких-либо веществ",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "при сходстве в строении лекарства с каким-либо метаболитом организма нарушение функций последнего",
+          "correct": true
+        },
+        {
+          "id": 6,
+          "text": "связывание лекарства с белками плазмы крови",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 2,
+      "question": "Наиболее известные вторичные посредники (мессенджеры):",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "фосфодиэстераза",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "циклический аденозинмонофосфат",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "гамма-аминомасляная кислота",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "инозитолтрифосфат",
+          "correct": true
+        },
+        {
+          "id": 5,
+          "text": "диацилглицерол",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 3,
+      "question": "Вещество, обладающее выраженным аффинитетом и не имеющее внутренней активности, называется:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "агонистом",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "агонистом-антагонистом",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "антагонистом",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "антиметаболитом",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 4,
+      "question": "При комбинированном применении лекарственных препаратов, имеющих однонаправленные эффекты и действующих на разные субстраты, отмечается:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "аддиция",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "потенцирование",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "кумуляция",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 5,
+      "question": "Первичная фармакологическая реакция препарата Деферазирокс, образующего с железом стабильные водорастворимые соединения, называется:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что данные варианты описывают ключевые биохимические или физиологические процессы, лежащие в основе эффектов препарата. Понимание этих механизмов критически важно для предсказания фармакологических эффектов и побочных реакций препарата.",
+      "options": [
+        {
+          "id": 1,
+          "text": "антиметаболизм",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "комплексообразование",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "ингибирование ферментов",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "блокада ионных каналов",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 6,
+      "question": "При комбинированном применении лекарственных препаратов, имеющих противоположные эффекты и действующих на один и тот же субстрат, отмечается:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "options": [
+        {
+          "id": 1,
+          "text": "синергизм",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "косвенный антагонизм",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "прямиой антагонизм",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 7,
+      "question": "Примеры этиотропной терапии:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "Применение анальгетиков при боли",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "Применение препаратов, усиливающих сократимость миокарда при сердечной недостаточности",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "Противомикробные препараты при инфекциях",
+          "correct": true
+        },
+        {
+          "id": 4,
+          "text": "Лечение сахарного диабета инсулином",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 8,
+      "question": "Примеры симптоматической терапии:",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "Применение анальгетиков при боли",
+          "correct": true
+        },
+        {
+          "id": 2,
+          "text": "Применение препаратов, усиливающих сократимость миокарда при сердечной недостаточности",
+          "correct": false
+        },
+        {
+          "id": 3,
+          "text": "Противомикробные препараты при инфекциях",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "Лечение сахарного диабета инсулином",
+          "correct": false
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 9,
+      "question": "Примеры патогенетической терапии:",
+      "multi": true,
+      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "options": [
+        {
+          "id": 1,
+          "text": "Применение анальгетиков при боли",
+          "correct": false
+        },
+        {
+          "id": 2,
+          "text": "Применение препаратов, усиливающих сократимость миокарда при сердечной недостаточности",
+          "correct": true
+        },
+        {
+          "id": 3,
+          "text": "Противомикробные препараты при инфекциях",
+          "correct": false
+        },
+        {
+          "id": 4,
+          "text": "Лечение сахарного диабета инсулином",
+          "correct": true
+        }
+      ],
+      "fill_in_blanks": []
+    },
+    {
+      "id": 10,
+      "question": "Действие лекарства на организм на клеточном, субклеточном, молекулярном уровне называется {первичная фармакологическая реакция|первичный фармакологический ответ}",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант для заполнения пропуска соответствует 'первичная фармакологическая реакция, первичный фармакологический ответ'. Эти термины точно описывают процессы или вещества, необходимые для заполнения пропусков.",
+      "options": [],
+      "fill_in_blanks": [
+        [
+          "первичная фармакологическая реакция",
+          "первичный фармакологический ответ"
+        ]
+      ]
+    },
+    {
+      "id": 11,
+      "question": "Необычное действие лекарства на организм, связанное с генетической ферментопатией, называется {идиосинкразия}",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант для заполнения пропуска соответствует 'идиосинкразия'. Эти термины точно описывают процессы или вещества, необходимые для заполнения пропусков.",
+      "options": [],
+      "fill_in_blanks": [
+        [
+          "идиосинкразия"
+        ]
+      ]
+    },
+    {
+      "id": 12,
+      "question": "Диапазон доз лекарственного вещества от минимальной терапевтической до минимальной токсической называется {терапевтическая широта|широта терапевтического действия|терапевтическое окно}",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант для заполнения пропуска соответствует 'терапевтическая широта, широта терапевтического действия, терапевтическое окно'. Эти термины точно описывают процессы или вещества, необходимые для заполнения пропусков.",
+      "options": [],
+      "fill_in_blanks": [
+        [
+          "терапевтическая широта",
+          "широта терапевтического действия",
+          "терапевтическое окно"
+        ]
+      ]
+    },
+    {
+      "id": 13,
+      "question": "Допинг — это вещество, {запрещенное к применению в спорте|запрещенное в спорте}",
+      "multi": false,
+      "explanation": "Пояснение: Правильный вариант для заполнения пропуска соответствует 'запрещенное к применению в спорте, запрещенное в спорте'. Эти термины точно описывают процессы или вещества, необходимые для заполнения пропусков.",
+      "options": [],
+      "fill_in_blanks": [
+        [
+          "запрещенное к применению в спорте",
+          "запрещенное в спорте"
+        ]
+      ]
+    }
+  ]
+};
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuiz();
+        });
+
+        function renderQuiz() {
+            const quizForm = document.getElementById('quizForm');
+            quizForm.innerHTML = ''; // Clear previous questions
+            quizData.questions.forEach(q => {
+                const questionBlock = document.createElement('div');
+                questionBlock.classList.add('question-block');
+                questionBlock.setAttribute('data-question-id', q.id);
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('question-text');
+                
+                let qTextHtml = q.question;
+                if (q.fill_in_blanks && q.fill_in_blanks.length > 0) {
+                    let blankIndex = 0;
+                    qTextHtml = q.question.replace(/{.*?}/g, () => {
+                        return `<input type="text" class="fill-in-blank-input" data-blank-index="${blankIndex++}" />`;
+                    });
+                }
+                questionText.innerHTML = `<span>${q.id}. ${qTextHtml}</span> <br> <small>(${q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'})</small>`;
+                questionBlock.appendChild(questionText);
+
+                if (q.options && q.options.length > 0) {
+                    const optionsList = document.createElement('ul');
+                    optionsList.classList.add('options-list');
+                    q.options.forEach(opt => {
+                        const listItem = document.createElement('li');
+                        const inputType = q.multi ? 'checkbox' : 'radio';
+                        const inputName = `question-${q.id}`;
+                        
+                        listItem.innerHTML = `
+                            <label>
+                                <input type="${inputType}" name="${inputName}" value="${opt.id}">
+                                ${opt.text}
+                            </label>
+                        `;
+                        optionsList.appendChild(listItem);
+                    });
+                questionBlock.appendChild(optionsList);
+                }
+
+                const explanationToggle = document.createElement('span');
+                explanationToggle.classList.add('explanation-toggle');
+                explanationToggle.textContent = 'Показать пояснение';
+                explanationToggle.style.display = 'none'; // Initially hidden
+                explanationToggle.onclick = () => {
+                    const explanationBlock = questionBlock.querySelector('.explanation-block');
+                    if (explanationBlock.style.display === 'none' || explanationBlock.style.display === '') {
+                        explanationBlock.style.display = 'block';
+                        explanationToggle.textContent = 'Скрыть пояснение';
+                    } else {
+                        explanationBlock.style.display = 'none';
+                        explanationToggle.textContent = 'Показать пояснение';
+                    }
+                };
+                questionBlock.appendChild(explanationToggle);
+
+                const explanationBlock = document.createElement('div');
+                explanationBlock.classList.add('explanation-block');
+                explanationBlock.style.display = 'none'; // Initially hidden
+                explanationBlock.innerHTML = q.explanation;
+                questionBlock.appendChild(explanationBlock);
+
+                quizForm.appendChild(questionBlock);
+            });
+            document.getElementById('totalQuestions').textContent = quizData.questions.length;
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            let totalQuestions = quizData.questions.length;
+
+            quizData.questions.forEach(q => {
+                const questionBlock = document.querySelector(`[data-question-id="${q.id}"]`);
+                // Clear all previous styling on labels and inputs
+                questionBlock.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('correct-answer', 'incorrect-answer');
+                });
+                questionBlock.querySelectorAll('.fill-in-blank-input').forEach(input => {
+                    input.classList.remove('correct', 'incorrect');
+                });
+
+                // Show explanation block and toggle after check
+                const explanationBlock = questionBlock.querySelector('.explanation-block');
+                const explanationToggle = questionBlock.querySelector('.explanation-toggle');
+                explanationBlock.style.display = 'block'; 
+                explanationToggle.style.display = 'block'; // Make toggle visible after check
+                explanationToggle.textContent = 'Скрыть пояснение';
+
+                let isQuestionCorrectOverall = true; // Tracks if the entire question is answered correctly
+
+                if (q.fill_in_blanks && q.fill_in_blanks.length > 0) {
+                    const inputs = questionBlock.querySelectorAll('.fill-in-blank-input');
+                    let allBlanksCorrect = true;
+                    inputs.forEach((input, index) => {
+                        const userAnswer = input.value.trim().toLowerCase();
+                        const correctAnswersForBlank = q.fill_in_blanks[index].map(ans => ans.toLowerCase());
+
+                        if (correctAnswersForBlank.includes(userAnswer)) {
+                            input.classList.add('correct');
+                        } else {
+                            input.classList.add('incorrect');
+                            allBlanksCorrect = false;
+                        }
+                    });
+                    if (allBlanksCorrect) {
+                        score++;
+                    }
+                } else if (q.options && q.options.length > 0) {
+                    const selectedInputs = Array.from(questionBlock.querySelectorAll(`input[name="question-${q.id}"]`));
+                    const correctOptionIds = q.options.filter(opt => opt.correct).map(opt => String(opt.id));
+                    
+                    let userCorrectSelections = 0;
+                    let userIncorrectSelections = 0;
+
+                    selectedInputs.forEach(input => {
+                        const optionId = String(input.value);
+                        const label = input.closest('label');
+
+                        if (input.checked) {
+                            if (correctOptionIds.includes(optionId)) {
+                                label.classList.add('correct-answer');
+                                userCorrectSelections++;
+                            } else {
+                                label.classList.add('incorrect-answer');
+                                userIncorrectSelections++;
+                            }
+                        } else { // If not selected
+                            if (correctOptionIds.includes(optionId)) {
+                                // This is a correct answer that the user missed
+                                label.classList.add('correct-answer'); // Highlight the missed correct answer
+                                isQuestionCorrectOverall = false;
+                            }
+                        }
+                    });
+
+                    // Check if all correct options were selected and no incorrect ones were selected
+                    if (userCorrectSelections === correctOptionIds.length && userIncorrectSelections === 0 && selectedInputs.filter(input => input.checked).length === correctOptionIds.length) {
+                        score++;
+                    }
+                }
+            });
+            document.getElementById('score').textContent = score;
+            const percentage = totalQuestions > 0 ? ((score / totalQuestions) * 100).toFixed(1) : 0;
+            document.getElementById('percentage').textContent = percentage;
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function resetQuiz() {
+            const quizForm = document.getElementById('quizForm');
+            quizForm.reset(); // Reset form inputs
+
+            quizData.questions.forEach(q => {
+                const questionBlock = document.querySelector(`[data-question-id="${q.id}"]`);
+                // Remove all result-related classes
+                questionBlock.querySelectorAll('.options-list label').forEach(label => {
+                    label.classList.remove('correct-answer', 'incorrect-answer');
+                });
+                questionBlock.querySelectorAll('.fill-in-blank-input').forEach(input => {
+                    input.classList.remove('correct', 'incorrect');
+                });
+                // Hide explanations
+                questionBlock.querySelector('.explanation-block').style.display = 'none';
+                questionBlock.querySelector('.explanation-toggle').textContent = 'Показать пояснение';
+            });
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('score').textContent = '0';
+        }
+    </script>
+</body>
+</html>
