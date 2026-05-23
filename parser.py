@@ -177,6 +177,21 @@ def generate_html_test(test_data, output_path):
             font-weight: bold;
             margin-bottom: 10px;
             line-height: 1.5;
+            position: relative; /* For positioning the icon */
+            padding-right: 30px; /* Add space for the icon */
+        }}
+        .question-status-icon {{
+            position: absolute;
+            top: 8px; /* Adjust vertical position */
+            right: 8px; /* Adjust horizontal position */
+            font-size: 1.2em;
+            display: none; /* Hidden by default */
+        }}
+        .question-status-icon.correct {{
+            color: #28a745; /* Green */
+        }}
+        .question-status-icon.incorrect {{
+            color: #dc3545; /* Red */
         }}
         .options-list {{
             list-style: none;
@@ -319,7 +334,7 @@ def generate_html_test(test_data, output_path):
                         return `<input type="text" class="fill-in-blank-input" data-blank-index="${{blankIndex++}}" />`;
                     }});
                 }}
-                questionText.innerHTML = `<span>${{q.id}}. ${{qTextHtml}}</span> <br> <small>(${{q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'}})</small>`;
+                questionText.innerHTML = `<span>${{q.id}}. ${{qTextHtml}}</span> <br> <small>(${{q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'}})</small> <span class="question-status-icon"></span>`;
                 questionBlock.appendChild(questionText);
 
                 if (q.options && q.options.length > 0) {{
@@ -375,6 +390,8 @@ def generate_html_test(test_data, output_path):
                 }}
 
                 let isQuestionCorrectOverall = true; // Tracks if the entire question is answered correctly
+                const statusIcon = questionBlock.querySelector('.question-status-icon');
+                statusIcon.style.display = 'block'; // Show icon container
 
                 if (q.fill_in_blanks && q.fill_in_blanks.length > 0) {{
                     const inputs = questionBlock.querySelectorAll('.fill-in-blank-input');
@@ -388,6 +405,7 @@ def generate_html_test(test_data, output_path):
                         }} else {{
                             input.classList.add('incorrect');
                             allBlanksCorrect = false;
+                            isQuestionCorrectOverall = false; // Mark question as incorrect if any blank is wrong
                         }}
                     }});
                     if (allBlanksCorrect) {{
@@ -411,6 +429,7 @@ def generate_html_test(test_data, output_path):
                             }} else {{
                                 label.classList.add('incorrect-answer');
                                 userIncorrectSelections++;
+                                isQuestionCorrectOverall = false; // Mark question as incorrect if any wrong option is selected
                             }}
                         }} else {{ // If not selected
                             if (correctOptionIds.includes(optionId)) {{
@@ -424,7 +443,20 @@ def generate_html_test(test_data, output_path):
                     // Check if all correct options were selected and no incorrect ones were selected
                     if (userCorrectSelections === correctOptionIds.length && userIncorrectSelections === 0 && selectedInputs.filter(input => input.checked).length === correctOptionIds.length) {{
                         score++;
+                    }} else {{
+                        isQuestionCorrectOverall = false; // Ensure question is marked incorrect if not all conditions met
                     }}
+                }}
+
+                // Set question status icon
+                if (isQuestionCorrectOverall) {{
+                    statusIcon.innerHTML = '&#10004;'; // Green checkmark
+                    statusIcon.classList.add('correct');
+                    statusIcon.classList.remove('incorrect');
+                }} else {{
+                    statusIcon.innerHTML = '&#10006;'; // Red X
+                    statusIcon.classList.add('incorrect');
+                    statusIcon.classList.remove('correct');
                 }}
             }});
             document.getElementById('score').textContent = score;
@@ -449,6 +481,13 @@ def generate_html_test(test_data, output_path):
                 // Hide explanations
                 if (questionBlock.querySelector('.explanation-block')) {{ // Check if explanation block exists
                     questionBlock.querySelector('.explanation-block').style.display = 'none';
+                }}
+                // Hide and clear status icon
+                const statusIcon = questionBlock.querySelector('.question-status-icon');
+                if (statusIcon) {{
+                    statusIcon.style.display = 'none';
+                    statusIcon.innerHTML = '';
+                    statusIcon.classList.remove('correct', 'incorrect');
                 }}
             }});
             document.getElementById('results').style.display = 'none';
@@ -650,13 +689,12 @@ def generate_index_html(test_metadata, output_path):
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Добро пожаловать в тесты по фармакологии!</h1>
-        <p>Выберите тему для прохождения теста:</p>
-        <ul>
-            {list_items}
-        </ul>
-    </div>
+        <div class="container">
+            <h1>Тесты по фармакологии для самоконтроля знаний</h1>
+            <ul>
+                {list_items}
+            </ul>
+        </div>
 </body>
 </html>
 """
