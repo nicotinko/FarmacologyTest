@@ -37,6 +37,21 @@
             font-weight: bold;
             margin-bottom: 10px;
             line-height: 1.5;
+            position: relative; /* For positioning the icon */
+            padding-right: 30px; /* Add space for the icon */
+        }
+        .question-status-icon {
+            position: absolute;
+            top: 8px; /* Adjust vertical position */
+            right: 8px; /* Adjust horizontal position */
+            font-size: 1.2em;
+            display: none; /* Hidden by default */
+        }
+        .question-status-icon.correct {
+            color: #28a745; /* Green */
+        }
+        .question-status-icon.incorrect {
+            color: #dc3545; /* Red */
         }
         .options-list {
             list-style: none;
@@ -67,6 +82,9 @@
         label.incorrect-answer { /* Corrected selector */
             background-color: #ffe6e6;
             border-color: #e6a3a3;
+        }
+        label.missed-correct-answer { /* New selector for not selected correct answers */
+            border: 2px solid #28a745; /* Green border */
         }
         .explanation-block {
             margin-top: 15px;
@@ -159,7 +177,7 @@
       "id": 1,
       "question": "Рецепторы, активация которых вызывает супраспинальную анальгезию, эйфорию и угнетение дыхательного центра -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что эти варианты точно указывают на расположение и роль соответствующих адренорецепторов в организме. Адренорецепторы играют ключевую роль в регуляции различных физиологических процессов через симпатическую нервную систему.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -188,7 +206,7 @@
       "id": 2,
       "question": "Все перечисленные ниже отличия буторфанола от морфина верны, за исключением -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -217,7 +235,7 @@
       "id": 3,
       "question": "Препарат, наиболее часто используемый в нейролептанальгезии -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -251,7 +269,7 @@
       "id": 4,
       "question": "Все перечисленные свойства диклофенака верны, за исключением -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -280,7 +298,7 @@
       "id": 5,
       "question": "Препарат, относящийся к НПВС, который широко применяется для профилактики тромбозов -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -314,7 +332,7 @@
       "id": 6,
       "question": "Препарат, который может использоваться для консервативного лечения новорожденных с открытым артериальным протоком -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -348,7 +366,7 @@
       "id": 7,
       "question": "Antiдот при отравлении морфином -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -377,7 +395,7 @@
       "id": 8,
       "question": "Препараты, относящиеся к агонистам-антагонистам опиатных рецепторов -",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что эти варианты точно указывают на расположение и роль соответствующих адренорецепторов в организме. Адренорецепторы играют ключевую роль в регуляции различных физиологических процессов через симпатическую нервную систему.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -411,7 +429,7 @@
       "id": 9,
       "question": "Отличия ацетаминофена (парацетамола) от ацетилсалициловой кислоты -",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -445,7 +463,7 @@
       "id": 10,
       "question": "Отличия целекоксиба от индометацина:",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -479,7 +497,7 @@
       "id": 11,
       "question": "Побочные эффекты индометацина –",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы. Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -518,7 +536,7 @@
       "id": 12,
       "question": "Механизмы действия ацетилсалициловой кислоты –",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -552,7 +570,7 @@
       "id": 13,
       "question": "Свойства опиоидных анальгетиков:",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -591,7 +609,7 @@
       "id": 14,
       "question": "Свойства неопиоидных анальгетиков:",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -630,7 +648,7 @@
       "id": 15,
       "question": "Система организма, участвующая в подавлении боли, называется {антиноцицептивная|антиноцицептивной}",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант для заполнения пропуска соответствует 'антиноцицептивная, антиноцицептивной'. Эти термины точно описывают процессы или вещества, необходимые для заполнения пропусков.",
+      "explanation": "",
       "options": [],
       "fill_in_blanks": [
         [
@@ -643,7 +661,7 @@
       "id": 16,
       "question": "Все положения, касающиеся колхицина, верны, за исключением -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -672,7 +690,7 @@
       "id": 17,
       "question": "Препарат, повышающий растворимость солей мочевой кислоты -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -706,7 +724,7 @@
       "id": 18,
       "question": "Блокатор ксантиноксидазы непуринового строения, снижающий синтез мочевой кислоты -",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -740,7 +758,7 @@
       "id": 19,
       "question": "Препараты, блокирующие ксантиноксидазу и снижающие синтез мочевой кислоты -",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -795,7 +813,7 @@
                         return `<input type="text" class="fill-in-blank-input" data-blank-index="${blankIndex++}" />`;
                     });
                 }
-                questionText.innerHTML = `<span>${q.id}. ${qTextHtml}</span> <br> <small>(${q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'})</small>`;
+                questionText.innerHTML = `<span>${q.id}. ${qTextHtml}</span> <br> <small>(${q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'})</small> <span class="question-status-icon"></span>`;
                 questionBlock.appendChild(questionText);
 
                 if (q.options && q.options.length > 0) {
@@ -817,27 +835,13 @@
                 questionBlock.appendChild(optionsList);
                 }
 
-                const explanationToggle = document.createElement('span');
-                explanationToggle.classList.add('explanation-toggle');
-                explanationToggle.textContent = 'Показать пояснение';
-                explanationToggle.style.display = 'none'; // Initially hidden
-                explanationToggle.onclick = () => {
-                    const explanationBlock = questionBlock.querySelector('.explanation-block');
-                    if (explanationBlock.style.display === 'none' || explanationBlock.style.display === '') {
-                        explanationBlock.style.display = 'block';
-                        explanationToggle.textContent = 'Скрыть пояснение';
-                    } else {
-                        explanationBlock.style.display = 'none';
-                        explanationToggle.textContent = 'Показать пояснение';
-                    }
-                };
-                questionBlock.appendChild(explanationToggle);
-
-                const explanationBlock = document.createElement('div');
-                explanationBlock.classList.add('explanation-block');
-                explanationBlock.style.display = 'none'; // Initially hidden
-                explanationBlock.innerHTML = q.explanation;
-                questionBlock.appendChild(explanationBlock);
+                if (q.explanation) { // Only create explanation block if explanation exists
+                    const explanationBlock = document.createElement('div');
+                    explanationBlock.classList.add('explanation-block');
+                    explanationBlock.style.display = 'none'; // Initially hidden, will be shown on check
+                    explanationBlock.innerHTML = `<strong>Объяснение:</strong> ${q.explanation}`;
+                    questionBlock.appendChild(explanationBlock);
+                }
 
                 quizForm.appendChild(questionBlock);
             });
@@ -858,14 +862,15 @@
                     input.classList.remove('correct', 'incorrect');
                 });
 
-                // Show explanation block and toggle after check
-                const explanationBlock = questionBlock.querySelector('.explanation-block');
-                const explanationToggle = questionBlock.querySelector('.explanation-toggle');
-                explanationBlock.style.display = 'block'; 
-                explanationToggle.style.display = 'block'; // Make toggle visible after check
-                explanationToggle.textContent = 'Скрыть пояснение';
+                // Show explanation block after check, only if explanation exists
+                if (q.explanation) {
+                    const explanationBlock = questionBlock.querySelector('.explanation-block');
+                    explanationBlock.style.display = 'block'; 
+                }
 
                 let isQuestionCorrectOverall = true; // Tracks if the entire question is answered correctly
+                const statusIcon = questionBlock.querySelector('.question-status-icon');
+                statusIcon.style.display = 'block'; // Show icon container
 
                 if (q.fill_in_blanks && q.fill_in_blanks.length > 0) {
                     const inputs = questionBlock.querySelectorAll('.fill-in-blank-input');
@@ -879,6 +884,7 @@
                         } else {
                             input.classList.add('incorrect');
                             allBlanksCorrect = false;
+                            isQuestionCorrectOverall = false; // Mark question as incorrect if any blank is wrong
                         }
                     });
                     if (allBlanksCorrect) {
@@ -902,11 +908,12 @@
                             } else {
                                 label.classList.add('incorrect-answer');
                                 userIncorrectSelections++;
+                                isQuestionCorrectOverall = false; // Mark question as incorrect if any wrong option is selected
                             }
                         } else { // If not selected
                             if (correctOptionIds.includes(optionId)) {
                                 // This is a correct answer that the user missed
-                                label.classList.add('correct-answer'); // Highlight the missed correct answer
+                                label.classList.add('missed-correct-answer'); // Highlight with green border
                                 isQuestionCorrectOverall = false;
                             }
                         }
@@ -915,7 +922,20 @@
                     // Check if all correct options were selected and no incorrect ones were selected
                     if (userCorrectSelections === correctOptionIds.length && userIncorrectSelections === 0 && selectedInputs.filter(input => input.checked).length === correctOptionIds.length) {
                         score++;
+                    } else {
+                        isQuestionCorrectOverall = false; // Ensure question is marked incorrect if not all conditions met
                     }
+                }
+
+                // Set question status icon
+                if (isQuestionCorrectOverall) {
+                    statusIcon.innerHTML = '&#10004;'; // Green checkmark
+                    statusIcon.classList.add('correct');
+                    statusIcon.classList.remove('incorrect');
+                } else {
+                    statusIcon.innerHTML = '&#10006;'; // Red X
+                    statusIcon.classList.add('incorrect');
+                    statusIcon.classList.remove('correct');
                 }
             });
             document.getElementById('score').textContent = score;
@@ -932,17 +952,26 @@
                 const questionBlock = document.querySelector(`[data-question-id="${q.id}"]`);
                 // Remove all result-related classes
                 questionBlock.querySelectorAll('.options-list label').forEach(label => {
-                    label.classList.remove('correct-answer', 'incorrect-answer');
+                    label.classList.remove('correct-answer', 'incorrect-answer', 'missed-correct-answer');
                 });
                 questionBlock.querySelectorAll('.fill-in-blank-input').forEach(input => {
                     input.classList.remove('correct', 'incorrect');
                 });
                 // Hide explanations
-                questionBlock.querySelector('.explanation-block').style.display = 'none';
-                questionBlock.querySelector('.explanation-toggle').textContent = 'Показать пояснение';
+                if (questionBlock.querySelector('.explanation-block')) { // Check if explanation block exists
+                    questionBlock.querySelector('.explanation-block').style.display = 'none';
+                }
+                // Hide and clear status icon
+                const statusIcon = questionBlock.querySelector('.question-status-icon');
+                if (statusIcon) {
+                    statusIcon.style.display = 'none';
+                    statusIcon.innerHTML = '';
+                    statusIcon.classList.remove('correct', 'incorrect');
+                }
             });
             document.getElementById('results').style.display = 'none';
             document.getElementById('score').textContent = '0';
+            window.scrollTo(0, 0); // Scroll to top
         }
     </script>
 </body>

@@ -37,6 +37,21 @@
             font-weight: bold;
             margin-bottom: 10px;
             line-height: 1.5;
+            position: relative; /* For positioning the icon */
+            padding-right: 30px; /* Add space for the icon */
+        }
+        .question-status-icon {
+            position: absolute;
+            top: 8px; /* Adjust vertical position */
+            right: 8px; /* Adjust horizontal position */
+            font-size: 1.2em;
+            display: none; /* Hidden by default */
+        }
+        .question-status-icon.correct {
+            color: #28a745; /* Green */
+        }
+        .question-status-icon.incorrect {
+            color: #dc3545; /* Red */
         }
         .options-list {
             list-style: none;
@@ -67,6 +82,9 @@
         label.incorrect-answer { /* Corrected selector */
             background-color: #ffe6e6;
             border-color: #e6a3a3;
+        }
+        label.missed-correct-answer { /* New selector for not selected correct answers */
+            border: 2px solid #28a745; /* Green border */
         }
         .explanation-block {
             margin-top: 15px;
@@ -159,7 +177,7 @@
       "id": 1,
       "question": "Препараты, используемые при гипохромных анемиях:",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -193,7 +211,7 @@
       "id": 2,
       "question": "Всасывание железа улучшается:",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -222,7 +240,7 @@
       "id": 3,
       "question": "Средства, применяемые при гиперхромных анемиях:",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -256,7 +274,7 @@
       "id": 4,
       "question": "Средства, стимулирующие лейкопоэз:",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -290,7 +308,7 @@
       "id": 5,
       "question": "При передозировке препаратов железа применяют:",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -324,7 +342,7 @@
       "id": 6,
       "question": "Комплексный препарат трехвалентного железа для перорального применения:",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -353,7 +371,7 @@
       "id": 7,
       "question": "Препарат, применяемый при аутоиммунной гемолитической анемии:",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -387,7 +405,7 @@
       "id": 8,
       "question": "Препарат, стимулирующий лейкопоэз, относящийся к колониестимулирующим факторам:",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -421,7 +439,7 @@
       "id": 9,
       "question": "Препарат, применяемый при гиперхромной мегалобластической анемии:",
       "multi": false,
-      "explanation": "Пояснение: Правильный вариант выбран потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -450,7 +468,7 @@
       "id": 10,
       "question": "Характеристика препаратов солевого железа:",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -484,7 +502,7 @@
       "id": 11,
       "question": "Характеристика комплексных препаратов железа:",
       "multi": true,
-      "explanation": "Пояснение: Правильные варианты выбраны потому, что выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы.",
+      "explanation": "",
       "options": [
         {
           "id": 1,
@@ -539,7 +557,7 @@
                         return `<input type="text" class="fill-in-blank-input" data-blank-index="${blankIndex++}" />`;
                     });
                 }
-                questionText.innerHTML = `<span>${q.id}. ${qTextHtml}</span> <br> <small>(${q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'})</small>`;
+                questionText.innerHTML = `<span>${q.id}. ${qTextHtml}</span> <br> <small>(${q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'})</small> <span class="question-status-icon"></span>`;
                 questionBlock.appendChild(questionText);
 
                 if (q.options && q.options.length > 0) {
@@ -561,27 +579,13 @@
                 questionBlock.appendChild(optionsList);
                 }
 
-                const explanationToggle = document.createElement('span');
-                explanationToggle.classList.add('explanation-toggle');
-                explanationToggle.textContent = 'Показать пояснение';
-                explanationToggle.style.display = 'none'; // Initially hidden
-                explanationToggle.onclick = () => {
-                    const explanationBlock = questionBlock.querySelector('.explanation-block');
-                    if (explanationBlock.style.display === 'none' || explanationBlock.style.display === '') {
-                        explanationBlock.style.display = 'block';
-                        explanationToggle.textContent = 'Скрыть пояснение';
-                    } else {
-                        explanationBlock.style.display = 'none';
-                        explanationToggle.textContent = 'Показать пояснение';
-                    }
-                };
-                questionBlock.appendChild(explanationToggle);
-
-                const explanationBlock = document.createElement('div');
-                explanationBlock.classList.add('explanation-block');
-                explanationBlock.style.display = 'none'; // Initially hidden
-                explanationBlock.innerHTML = q.explanation;
-                questionBlock.appendChild(explanationBlock);
+                if (q.explanation) { // Only create explanation block if explanation exists
+                    const explanationBlock = document.createElement('div');
+                    explanationBlock.classList.add('explanation-block');
+                    explanationBlock.style.display = 'none'; // Initially hidden, will be shown on check
+                    explanationBlock.innerHTML = `<strong>Объяснение:</strong> ${q.explanation}`;
+                    questionBlock.appendChild(explanationBlock);
+                }
 
                 quizForm.appendChild(questionBlock);
             });
@@ -602,14 +606,15 @@
                     input.classList.remove('correct', 'incorrect');
                 });
 
-                // Show explanation block and toggle after check
-                const explanationBlock = questionBlock.querySelector('.explanation-block');
-                const explanationToggle = questionBlock.querySelector('.explanation-toggle');
-                explanationBlock.style.display = 'block'; 
-                explanationToggle.style.display = 'block'; // Make toggle visible after check
-                explanationToggle.textContent = 'Скрыть пояснение';
+                // Show explanation block after check, only if explanation exists
+                if (q.explanation) {
+                    const explanationBlock = questionBlock.querySelector('.explanation-block');
+                    explanationBlock.style.display = 'block'; 
+                }
 
                 let isQuestionCorrectOverall = true; // Tracks if the entire question is answered correctly
+                const statusIcon = questionBlock.querySelector('.question-status-icon');
+                statusIcon.style.display = 'block'; // Show icon container
 
                 if (q.fill_in_blanks && q.fill_in_blanks.length > 0) {
                     const inputs = questionBlock.querySelectorAll('.fill-in-blank-input');
@@ -623,6 +628,7 @@
                         } else {
                             input.classList.add('incorrect');
                             allBlanksCorrect = false;
+                            isQuestionCorrectOverall = false; // Mark question as incorrect if any blank is wrong
                         }
                     });
                     if (allBlanksCorrect) {
@@ -646,11 +652,12 @@
                             } else {
                                 label.classList.add('incorrect-answer');
                                 userIncorrectSelections++;
+                                isQuestionCorrectOverall = false; // Mark question as incorrect if any wrong option is selected
                             }
                         } else { // If not selected
                             if (correctOptionIds.includes(optionId)) {
                                 // This is a correct answer that the user missed
-                                label.classList.add('correct-answer'); // Highlight the missed correct answer
+                                label.classList.add('missed-correct-answer'); // Highlight with green border
                                 isQuestionCorrectOverall = false;
                             }
                         }
@@ -659,7 +666,20 @@
                     // Check if all correct options were selected and no incorrect ones were selected
                     if (userCorrectSelections === correctOptionIds.length && userIncorrectSelections === 0 && selectedInputs.filter(input => input.checked).length === correctOptionIds.length) {
                         score++;
+                    } else {
+                        isQuestionCorrectOverall = false; // Ensure question is marked incorrect if not all conditions met
                     }
+                }
+
+                // Set question status icon
+                if (isQuestionCorrectOverall) {
+                    statusIcon.innerHTML = '&#10004;'; // Green checkmark
+                    statusIcon.classList.add('correct');
+                    statusIcon.classList.remove('incorrect');
+                } else {
+                    statusIcon.innerHTML = '&#10006;'; // Red X
+                    statusIcon.classList.add('incorrect');
+                    statusIcon.classList.remove('correct');
                 }
             });
             document.getElementById('score').textContent = score;
@@ -676,17 +696,26 @@
                 const questionBlock = document.querySelector(`[data-question-id="${q.id}"]`);
                 // Remove all result-related classes
                 questionBlock.querySelectorAll('.options-list label').forEach(label => {
-                    label.classList.remove('correct-answer', 'incorrect-answer');
+                    label.classList.remove('correct-answer', 'incorrect-answer', 'missed-correct-answer');
                 });
                 questionBlock.querySelectorAll('.fill-in-blank-input').forEach(input => {
                     input.classList.remove('correct', 'incorrect');
                 });
                 // Hide explanations
-                questionBlock.querySelector('.explanation-block').style.display = 'none';
-                questionBlock.querySelector('.explanation-toggle').textContent = 'Показать пояснение';
+                if (questionBlock.querySelector('.explanation-block')) { // Check if explanation block exists
+                    questionBlock.querySelector('.explanation-block').style.display = 'none';
+                }
+                // Hide and clear status icon
+                const statusIcon = questionBlock.querySelector('.question-status-icon');
+                if (statusIcon) {
+                    statusIcon.style.display = 'none';
+                    statusIcon.innerHTML = '';
+                    statusIcon.classList.remove('correct', 'incorrect');
+                }
             });
             document.getElementById('results').style.display = 'none';
             document.getElementById('score').textContent = '0';
+            window.scrollTo(0, 0); // Scroll to top
         }
     </script>
 </body>

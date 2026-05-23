@@ -24,67 +24,6 @@ def transliterate(name):
         result.append(translit_map.get(char, char))
     return "".join(result)
 
-def generate_explanation(question_text, correct_options, fill_in_blanks_answers):
-    """
-    Generates a pedagogical explanation for a question, based on general pharmacological knowledge.
-    Focuses on explaining why the correct answers are correct, without re-listing them extensively.
-    """
-    explanation_parts = []
-    question_text_lower = question_text.lower()
-
-    if fill_in_blanks_answers:
-        # For fill-in-the-blanks, the explanation needs to state what was expected.
-        # If there are multiple blanks, it might be more complex.
-        if len(fill_in_blanks_answers) == 1:
-            # For a single blank, list the acceptable answers for that blank.
-            explanation_parts.append(f"Правильный вариант для заполнения пропуска соответствует '{', '.join(fill_in_blanks_answers[0])}'.")
-        else:
-            # For multiple blanks, iterate through them
-            for i, blank_options in enumerate(fill_in_blanks_answers):
-                explanation_parts.append(f"Для пропуска №{i+1} правильный вариант соответствует '{', '.join(blank_options)}'.")
-        
-        if "катаболизм" in question_text_lower or "метаболизм" in question_text_lower:
-            explanation_parts.append("Эти ферменты (например, моноаминоксидаза и катехол-О-метилтрансфераза) являются ключевыми в метаболизме нейромедиаторов, регулируя их концентрацию и активность.")
-        elif "регулируется" in question_text_lower:
-             explanation_parts.append("Регуляция метаболизма нейромедиаторов важна для поддержания гомеостаза и нормальной функции нервной системы.")
-        else:
-            explanation_parts.append("Эти термины точно описывают процессы или вещества, необходимые для заполнения пропусков.")
-            
-    elif correct_options:
-        
-        # Determine the core reason for correctness based on question keywords
-        reason = ""
-        if "механизм действия" in question_text_lower or "фармакологическая реакция" in question_text_lower:
-            reason = "данные варианты описывают ключевые биохимические или физиологические процессы, лежащие в основе эффектов препарата."
-        elif "локализация и функция" in question_text_lower or "адренорецептор" in question_text_lower or "рецептор" in question_text_lower:
-            reason = "эти варианты точно указывают на расположение и роль соответствующих адренорецепторов в организме."
-        elif "применение" in question_text_lower or "показано при" in question_text_lower or "эффективен при" in question_text_lower:
-            reason = "препарат показан при данных состояниях благодаря его специфическому механизму действия и терапевтическим эффектам."
-        elif "классы адренергических препаратов" in question_text_lower or "эффекты" in question_text_lower:
-            reason = "указанные классы препаратов вызывают именно такие фармакологические эффекты, воздействуя на соответствующие адренорецепторы."
-        elif "селективный" in question_text_lower or "непрямой" in question_text_lower:
-            reason = "выбранный препарат является селективным или непрямым адреномиметиком/адренолитиком, что определяет его фармакологический профиль и минимизирует нежелательные эффекты."
-        else:
-            reason = "выбранный(е) вариант(ы) соответствует(ют) известным фармакологическим свойствам и классификации, а также принципам действия препаратов данной группы."
-
-        if len(correct_options) == 1:
-            explanation_parts.append(f"Правильный вариант выбран потому, что {reason}")
-        else:
-            explanation_parts.append(f"Правильные варианты выбраны потому, что {reason}")
-        
-        # Add general context after the specific explanation
-        if "механизм действия" in question_text_lower or "фармакологическая реакция" in question_text_lower:
-            explanation_parts.append("Понимание этих механизмов критически важно для предсказания фармакологических эффектов и побочных реакций препарата.")
-        elif "локализация и функция" in question_text_lower or "адренорецептор" in question_text_lower or "рецептор" in question_text_lower:
-            explanation_parts.append("Адренорецепторы играют ключевую роль в регуляции различных физиологических процессов через симпатическую нервную систему.")
-        elif "применение" in question_text_lower or "показано при" in question_text_lower or "эффективен при" in question_text_lower:
-            explanation_parts.append("Выбор препарата зависит от конкретной клинической ситуации и профиля побочных эффектов.")
-        elif "классы адренергических препаратов" in question_text_lower or "эффекты" in question_text_lower:
-            explanation_parts.append("Эти эффекты обусловлены взаимодействием препаратов с соответствующими адренорецепторами.")
-
-    final_explanation = "Пояснение: " + " ".join(explanation_parts)
-    return final_explanation
-
 def parse_md_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -127,26 +66,50 @@ def parse_md_file(file_path):
             
             # For fill-in-the-blanks, 'multi' means multiple blanks to fill, not multiple choice
             # For simplicity in initial implementation, we'll keep multi as False and assume each blank is a separate check
+            
+            # Extract explanation for fill-in-the-blanks
+            explanation = ""
+            explanation_match = re.search(r'\[\[(.*?)\]\]', block, re.DOTALL)
+            if explanation_match:
+                explanation = explanation_match.group(1).strip()
+                # Remove explanation from question_text if it was mistakenly included
+                question_text = re.sub(r'\[\[.*?\]\]', '', question_text).strip()
+
             questions_data.append({
                 "id": question_id_counter,
                 "question": question_text,
                 "multi": len(all_fill_in_blanks_options) > 1, # True if more than one blank
-                "explanation": generate_explanation(question_text, [], all_fill_in_blanks_options),
+                "explanation": explanation, # Use extracted explanation
                 "options": [],
                 "fill_in_blanks": all_fill_in_blanks_options # List of lists for multiple blanks
             })
             question_id_counter += 1
             continue
 
-
         # For multiple choice questions
         question_text = q_lines[0].strip()
+        options_start_index = 1
+        
+        # Check if the question text itself contains an explanation for single line questions
+        explanation_match_in_qtext = re.search(r'\[\[(.*?)\]\]', question_text)
+        if explanation_match_in_qtext:
+            explanation = explanation_match_in_qtext.group(1).strip()
+            question_text = re.sub(r'\[\[.*?\]\]', '', question_text).strip()
+        else:
+            explanation = ""
+
         option_id_counter = 1
-        for line in q_lines[1:]:
+        for line_idx, line in enumerate(q_lines[options_start_index:]):
             line = line.strip()
             if not line:
                 continue
             
+            # Check for explanation after options
+            explanation_match_after_options = re.match(r'\[\[(.*?)\]\]', line, re.DOTALL)
+            if explanation_match_after_options:
+                explanation = explanation_match_after_options.group(1).strip()
+                break # Stop processing lines as options once explanation is found
+
             option_match = re.match(r'^[a-zА-Я]\)\s*(.*)', line)
             if option_match:
                 option_text_raw = option_match.group(1)
@@ -163,7 +126,7 @@ def parse_md_file(file_path):
                 "id": question_id_counter,
                 "question": question_text,
                 "multi": multi_choice,
-                "explanation": generate_explanation(question_text, [opt for opt in options if opt['correct']], []),
+                "explanation": explanation, # Use extracted explanation
                 "options": options,
                 "fill_in_blanks": []
             })
@@ -214,6 +177,21 @@ def generate_html_test(test_data, output_path):
             font-weight: bold;
             margin-bottom: 10px;
             line-height: 1.5;
+            position: relative; /* For positioning the icon */
+            padding-right: 30px; /* Add space for the icon */
+        }}
+        .question-status-icon {{
+            position: absolute;
+            top: 8px; /* Adjust vertical position */
+            right: 8px; /* Adjust horizontal position */
+            font-size: 1.2em;
+            display: none; /* Hidden by default */
+        }}
+        .question-status-icon.correct {{
+            color: #28a745; /* Green */
+        }}
+        .question-status-icon.incorrect {{
+            color: #dc3545; /* Red */
         }}
         .options-list {{
             list-style: none;
@@ -244,6 +222,9 @@ def generate_html_test(test_data, output_path):
         label.incorrect-answer {{ /* Corrected selector */
             background-color: #ffe6e6;
             border-color: #e6a3a3;
+        }}
+        label.missed-correct-answer {{ /* New selector for not selected correct answers */
+            border: 2px solid #28a745; /* Green border */
         }}
         .explanation-block {{
             margin-top: 15px;
@@ -353,7 +334,7 @@ def generate_html_test(test_data, output_path):
                         return `<input type="text" class="fill-in-blank-input" data-blank-index="${{blankIndex++}}" />`;
                     }});
                 }}
-                questionText.innerHTML = `<span>${{q.id}}. ${{qTextHtml}}</span> <br> <small>(${{q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'}})</small>`;
+                questionText.innerHTML = `<span>${{q.id}}. ${{qTextHtml}}</span> <br> <small>(${{q.multi ? 'Несколько правильных ответов' : 'Один правильный ответ'}})</small> <span class="question-status-icon"></span>`;
                 questionBlock.appendChild(questionText);
 
                 if (q.options && q.options.length > 0) {{
@@ -375,27 +356,13 @@ def generate_html_test(test_data, output_path):
                 questionBlock.appendChild(optionsList);
                 }}
 
-                const explanationToggle = document.createElement('span');
-                explanationToggle.classList.add('explanation-toggle');
-                explanationToggle.textContent = 'Показать пояснение';
-                explanationToggle.style.display = 'none'; // Initially hidden
-                explanationToggle.onclick = () => {{
-                    const explanationBlock = questionBlock.querySelector('.explanation-block');
-                    if (explanationBlock.style.display === 'none' || explanationBlock.style.display === '') {{
-                        explanationBlock.style.display = 'block';
-                        explanationToggle.textContent = 'Скрыть пояснение';
-                    }} else {{
-                        explanationBlock.style.display = 'none';
-                        explanationToggle.textContent = 'Показать пояснение';
-                    }}
-                }};
-                questionBlock.appendChild(explanationToggle);
-
-                const explanationBlock = document.createElement('div');
-                explanationBlock.classList.add('explanation-block');
-                explanationBlock.style.display = 'none'; // Initially hidden
-                explanationBlock.innerHTML = q.explanation;
-                questionBlock.appendChild(explanationBlock);
+                if (q.explanation) {{ // Only create explanation block if explanation exists
+                    const explanationBlock = document.createElement('div');
+                    explanationBlock.classList.add('explanation-block');
+                    explanationBlock.style.display = 'none'; // Initially hidden, will be shown on check
+                    explanationBlock.innerHTML = `<strong>Объяснение:</strong> ${{q.explanation}}`;
+                    questionBlock.appendChild(explanationBlock);
+                }}
 
                 quizForm.appendChild(questionBlock);
             }});
@@ -416,14 +383,15 @@ def generate_html_test(test_data, output_path):
                     input.classList.remove('correct', 'incorrect');
                 }});
 
-                // Show explanation block and toggle after check
-                const explanationBlock = questionBlock.querySelector('.explanation-block');
-                const explanationToggle = questionBlock.querySelector('.explanation-toggle');
-                explanationBlock.style.display = 'block'; 
-                explanationToggle.style.display = 'block'; // Make toggle visible after check
-                explanationToggle.textContent = 'Скрыть пояснение';
+                // Show explanation block after check, only if explanation exists
+                if (q.explanation) {{
+                    const explanationBlock = questionBlock.querySelector('.explanation-block');
+                    explanationBlock.style.display = 'block'; 
+                }}
 
                 let isQuestionCorrectOverall = true; // Tracks if the entire question is answered correctly
+                const statusIcon = questionBlock.querySelector('.question-status-icon');
+                statusIcon.style.display = 'block'; // Show icon container
 
                 if (q.fill_in_blanks && q.fill_in_blanks.length > 0) {{
                     const inputs = questionBlock.querySelectorAll('.fill-in-blank-input');
@@ -437,6 +405,7 @@ def generate_html_test(test_data, output_path):
                         }} else {{
                             input.classList.add('incorrect');
                             allBlanksCorrect = false;
+                            isQuestionCorrectOverall = false; // Mark question as incorrect if any blank is wrong
                         }}
                     }});
                     if (allBlanksCorrect) {{
@@ -460,11 +429,12 @@ def generate_html_test(test_data, output_path):
                             }} else {{
                                 label.classList.add('incorrect-answer');
                                 userIncorrectSelections++;
+                                isQuestionCorrectOverall = false; // Mark question as incorrect if any wrong option is selected
                             }}
                         }} else {{ // If not selected
                             if (correctOptionIds.includes(optionId)) {{
                                 // This is a correct answer that the user missed
-                                label.classList.add('correct-answer'); // Highlight the missed correct answer
+                                label.classList.add('missed-correct-answer'); // Highlight with green border
                                 isQuestionCorrectOverall = false;
                             }}
                         }}
@@ -473,7 +443,20 @@ def generate_html_test(test_data, output_path):
                     // Check if all correct options were selected and no incorrect ones were selected
                     if (userCorrectSelections === correctOptionIds.length && userIncorrectSelections === 0 && selectedInputs.filter(input => input.checked).length === correctOptionIds.length) {{
                         score++;
+                    }} else {{
+                        isQuestionCorrectOverall = false; // Ensure question is marked incorrect if not all conditions met
                     }}
+                }}
+
+                // Set question status icon
+                if (isQuestionCorrectOverall) {{
+                    statusIcon.innerHTML = '&#10004;'; // Green checkmark
+                    statusIcon.classList.add('correct');
+                    statusIcon.classList.remove('incorrect');
+                }} else {{
+                    statusIcon.innerHTML = '&#10006;'; // Red X
+                    statusIcon.classList.add('incorrect');
+                    statusIcon.classList.remove('correct');
                 }}
             }});
             document.getElementById('score').textContent = score;
@@ -490,17 +473,26 @@ def generate_html_test(test_data, output_path):
                 const questionBlock = document.querySelector(`[data-question-id="${{q.id}}"]`);
                 // Remove all result-related classes
                 questionBlock.querySelectorAll('.options-list label').forEach(label => {{
-                    label.classList.remove('correct-answer', 'incorrect-answer');
+                    label.classList.remove('correct-answer', 'incorrect-answer', 'missed-correct-answer');
                 }});
                 questionBlock.querySelectorAll('.fill-in-blank-input').forEach(input => {{
                     input.classList.remove('correct', 'incorrect');
                 }});
                 // Hide explanations
-                questionBlock.querySelector('.explanation-block').style.display = 'none';
-                questionBlock.querySelector('.explanation-toggle').textContent = 'Показать пояснение';
+                if (questionBlock.querySelector('.explanation-block')) {{ // Check if explanation block exists
+                    questionBlock.querySelector('.explanation-block').style.display = 'none';
+                }}
+                // Hide and clear status icon
+                const statusIcon = questionBlock.querySelector('.question-status-icon');
+                if (statusIcon) {{
+                    statusIcon.style.display = 'none';
+                    statusIcon.innerHTML = '';
+                    statusIcon.classList.remove('correct', 'incorrect');
+                }}
             }});
             document.getElementById('results').style.display = 'none';
             document.getElementById('score').textContent = '0';
+            window.scrollTo(0, 0); // Scroll to top
         }}
     </script>
 </body>
@@ -697,13 +689,12 @@ def generate_index_html(test_metadata, output_path):
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Добро пожаловать в тесты по фармакологии!</h1>
-        <p>Выберите тему для прохождения теста:</p>
-        <ul>
-            {list_items}
-        </ul>
-    </div>
+        <div class="container">
+            <h1>Тесты по фармакологии для самоконтроля знаний</h1>
+            <ul>
+                {list_items}
+            </ul>
+        </div>
 </body>
 </html>
 """
