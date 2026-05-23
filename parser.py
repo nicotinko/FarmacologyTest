@@ -19,10 +19,37 @@ def transliterate(name):
         'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya',
         ' ': '_', '.': '', '-': '_', '(': '', ')': '', '?': '', '!': '', ',': '', ';': '', ':': ''
     }
-    result = []
+    
+    # First, convert to lowercase to handle any initial capitalization inconsistencies
+    # Then capitalize the first letter of each word if needed, but for filenames, usually just first word capitalized or all lowercase.
+    # For now, let's aim for 'Adrenolitiki' from 'Адренолитики'
+    processed_name = ""
+    capitalize_next = True
     for char in name:
-        result.append(translit_map.get(char, char))
-    return "".join(result)
+        if char.isalpha() and capitalize_next:
+            processed_name += translit_map.get(char.upper(), char.upper())
+            capitalize_next = False
+        elif char.isalpha():
+            processed_name += translit_map.get(char.lower(), char.lower())
+        else:
+            processed_name += translit_map.get(char, char)
+            if char.isspace() or char == '_': # capitalize after space or underscore
+                capitalize_next = True
+
+    # Final pass to ensure only the first letter is capitalized, and the rest are lowercase
+    # This might be tricky with words separated by underscores.
+    # Let's simplify: transliterate as is, then ensure only first char is upper.
+    
+    transliterated_raw = []
+    for char in name:
+        transliterated_raw.append(translit_map.get(char, char))
+    
+    final_name = "".join(transliterated_raw)
+    
+    # Ensure the first letter is uppercase and the rest are lowercase for consistent file naming
+    if final_name:
+        return final_name[0].upper() + final_name[1:].lower()
+    return final_name
 
 def parse_md_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
